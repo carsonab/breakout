@@ -6,7 +6,7 @@ Breakout::InputSystem::InputSystem()
 {
 }
 
-void Breakout::InputSystem::Update(const std::vector<std::shared_ptr<Object>>& gameObjects)
+void Breakout::InputSystem::Update(const std::list<std::shared_ptr<Object>>& gameObjects)
 {
     UpdateInputs();
 

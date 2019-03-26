@@ -3,7 +3,7 @@
 
 using Breakout::Object;
 
-Object::Object()
+Object::Object() : destroyFlag(false)
 {
 }
 
@@ -18,4 +18,14 @@ void Breakout::Object::Update(float deltaTime)
     {
         component->Update(deltaTime);
     }
+}
+
+bool Breakout::Object::GetDestroy()
+{
+    return destroyFlag;
+}
+
+void Breakout::Object::SetDestroy()
+{
+    destroyFlag = true;
 }

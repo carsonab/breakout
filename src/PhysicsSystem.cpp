@@ -7,7 +7,7 @@ Breakout::PhysicsSystem::PhysicsSystem()
 {
 }
 
-void Breakout::PhysicsSystem::Update(float deltaTime, const std::vector<std::shared_ptr<Object>>& gameObjects)
+void Breakout::PhysicsSystem::Update(float deltaTime, const std::list<std::shared_ptr<Object>>& gameObjects)
 {
     // get components of type
     UNUSED_ARGS(deltaTime, gameObjects);
@@ -65,14 +65,36 @@ void Breakout::PhysicsSystem::Update(float deltaTime, const std::vector<std::sha
                 // HACK- Technical debt (SJ) - we have collided set our selves back to the previous
                 if (hit.isHit && collidedAgainst.get() != nullptr)
                 {
+                    // For our object
                     Collision::CollisionReaction::CollisionReactionFunc reaction;
-                    Collision::CollisionChannel channel = Collision::CollisionChannel::CC_NONE;
-                    reactions.GetCollisionReaction(collisionComponent->ReadCollisionReaction(), channel, reaction);
-                    if (reaction != nullptr)
+                    Collision::CollisionChannel                         channel = Collision::CollisionChannel::CC_NONE;
+                    auto componentReactions = collisionComponent->GetCollisionReactions();
+
+                    for (auto& componentReaction : componentReactions)
                     {
-                        reaction(channel, object.get(), collidedAgainst.get(), hit);
+                        bool found = reactions.GetCollisionReaction(componentReaction, channel, reaction);
+                        if (found)
+                        {
+                            reaction(channel, object.get(), collidedAgainst.get(), hit);
+                        }
                     }
 
+                    // For collided object
+                    if (auto collidedAgainstCollisionComp = collidedAgainst->GetComponent<CollisionComponent>())
+                    {
+                        auto collidedAgainstReactions = collidedAgainstCollisionComp->GetCollisionReactions();
+
+                        for (auto& componentReaction : collidedAgainstReactions)
+                        {
+                            bool found = reactions.GetCollisionReaction(componentReaction, channel, reaction);
+                            if (found)
+                            {
+                                reaction(channel, collidedAgainst.get(), object.get(), hit);
+                            }
+                        }
+                    }
+
+                    // Reset position to before collision
                     positionComponent->SetPosition(newPos - hit.delta);
                 }
             }

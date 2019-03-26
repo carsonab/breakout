@@ -152,8 +152,16 @@ void Breakout::BreakoutGame::BeginGame()
 
 void Breakout::BreakoutGame::Update(float deltaTime)
 {
-    for (auto object : _gameObjects)
+    
+    for (auto iter = _gameObjects.begin(); iter != _gameObjects.end(); ++iter)
     {
-        object->Update(deltaTime);
+        if ((*iter)->GetDestroy() == true)
+        {
+            iter = _gameObjects.erase(iter);
+        }
+        else
+        {
+            (*iter)->Update(deltaTime);
+        }
     }
 }

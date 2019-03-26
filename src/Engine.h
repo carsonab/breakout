@@ -3,6 +3,7 @@
 #include "SFML/Graphics.hpp"
 
 #include <memory>
+#include <list>
 #include "Object.h"
 
 namespace Breakout
@@ -13,7 +14,7 @@ namespace Breakout
         Engine(sf::RenderWindow* window);
         ~Engine() = default;
 
-        void Update(float deltaTime, const std::vector<std::shared_ptr<Object>>& gameObjects);
+        void Update(float deltaTime, const std::list<std::shared_ptr<Object>>& gameObjects);
 
         std::unique_ptr<RenderSystem> renderSystem;
 

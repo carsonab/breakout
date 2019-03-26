@@ -11,7 +11,7 @@ Breakout::Engine::Engine(sf::RenderWindow* window)
     physicsSystem = std::make_unique<PhysicsSystem>();
 }
 
-void Breakout::Engine::Update(float deltaTime, const std::vector<std::shared_ptr<Object>>& gameObjects)
+void Breakout::Engine::Update(float deltaTime, const std::list<std::shared_ptr<Object>>& gameObjects)
 {
     if (renderSystem != nullptr)
     {

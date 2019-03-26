@@ -8,7 +8,7 @@ Breakout::RenderSystem::RenderSystem(sf::RenderWindow* _window) : window(_window
 {
 }
 
-void Breakout::RenderSystem::Update(float deltaTime, const std::vector<std::shared_ptr<Object>>& gameObjects)
+void Breakout::RenderSystem::Update(float deltaTime, const std::list<std::shared_ptr<Object>>& gameObjects)
 {
     // get components of type
     UNUSED_ARGS(deltaTime);

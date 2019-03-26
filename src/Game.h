@@ -17,14 +17,14 @@ namespace Breakout
         virtual void BeginGame()                                       = 0;
         virtual void EndGame()                                         = 0;
 
-        virtual std::vector<std::shared_ptr<Object>>& GetGameObjects()
+        virtual std::list<std::shared_ptr<Object>>& GetGameObjects()
         {
             return _gameObjects;
         }
 
       protected:
         std::shared_ptr<sf::RenderWindow>    _sfWindow;
-        std::vector<std::shared_ptr<Object>> _gameObjects;
+        std::list<std::shared_ptr<Object>> _gameObjects;
         std::unique_ptr<ObjectFactory>       objectFactory;
     };
 

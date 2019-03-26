@@ -182,10 +182,8 @@ void Breakout::PaddleMovementComponent::UnInit()
 }
 
 Breakout::CollisionComponent::CollisionComponent(const std::weak_ptr<Object>&     _owner,
-                                                 const std::shared_ptr<sf::Shape> inCollisionShape,
-                                                    const std::string& inCollisionReaction) :
-    BaseComponent(_owner),
-    collisionReaction(inCollisionReaction)
+                                                 const std::shared_ptr<sf::Shape> inCollisionShape) :
+    BaseComponent(_owner)
 {
     sf::Rect<float> collisionRect = inCollisionShape->getGlobalBounds();
     aabb.pos.x = collisionRect.left + collisionRect.width / 2.f;
@@ -200,7 +198,6 @@ CollisionComponent::~CollisionComponent()
 
 bool CollisionComponent::Init()
 {
-        
     return true;
 }
 
@@ -239,11 +236,9 @@ AABB CollisionComponent::GetTransformed()
  //   return false;
 //}
 
-void CollisionComponent::InjectReaction(const std::string& reactionId, Collision::CollisionChannel channel)
+void CollisionComponent::AddCollisionReaction(const std::string& reactionId)
 {
-    UNUSED_ARGS(reactionId, channel);
-
-
+    collisionReactions.push_back(reactionId);
 }
 
 AABB CollisionComponent::GetAABB(void)

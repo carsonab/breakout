@@ -1,4 +1,5 @@
 #pragma once
+#include <list>
 #include "Object.h"
 #include "CollisionReaction.h"
 
@@ -10,7 +11,7 @@ namespace Breakout
         PhysicsSystem();
         ~PhysicsSystem() = default;
 
-        void Update(float deltaTime, const std::vector<std::shared_ptr<Object>>& gameObjects);
+        void Update(float deltaTime, const std::list<std::shared_ptr<Object>>& gameObjects);
 
     protected:
         Collision::CollisionReaction reactions;

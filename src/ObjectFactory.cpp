@@ -31,7 +31,8 @@ std::shared_ptr<Breakout::Object> Breakout::ObjectFactory::CreateBrick(
 
     // Collision component
     std::shared_ptr<Breakout::CollisionComponent> col =
-        std::make_shared<Breakout::CollisionComponent>(object, brickShape, "Destructible");
+        std::make_shared<Breakout::CollisionComponent>(object, brickShape);
+    col->AddCollisionReaction("Break");
     object->AddComponent(col);
 
     // return it
@@ -63,7 +64,7 @@ std::shared_ptr<Object> Breakout::ObjectFactory::CreatePaddle(
 
     // Collision component
     std::shared_ptr<Breakout::CollisionComponent> col =
-        std::make_shared<Breakout::CollisionComponent>(object, paddleShape, "Solid");
+        std::make_shared<Breakout::CollisionComponent>(object, paddleShape);
     object->AddComponent(col);
 
     std::shared_ptr<Breakout::PaddleMovementComponent> paddleComponent =
@@ -93,7 +94,7 @@ std::shared_ptr<Object> Breakout::ObjectFactory::CreateWall(
     object->AddComponent(position);
 
     // Collision component
-    auto col = std::make_shared<Breakout::CollisionComponent>(object, wallShape, "Solid");
+    auto col = std::make_shared<Breakout::CollisionComponent>(object, wallShape);
     object->AddComponent(col);
 
     return object;
@@ -119,7 +120,8 @@ std::shared_ptr<Object> Breakout::ObjectFactory::CreateBall(
     object->AddComponent(position);
 
     // Collision component
-    auto col = std::make_shared<Breakout::CollisionComponent>(object, ballShape, "Bounce");
+    auto col = std::make_shared<Breakout::CollisionComponent>(object, ballShape);
+    col->AddCollisionReaction("Bounce");
     object->AddComponent(col);
 
     // Movement component

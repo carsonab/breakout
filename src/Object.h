@@ -30,8 +30,12 @@ namespace Breakout
 
         void AddComponent(std::shared_ptr<BaseComponent> component);
         void Update(float deltaTime);
+
+        void SetDestroy();
+        bool GetDestroy();
        
       protected:
         std::vector<std::shared_ptr<BaseComponent>> components;
+        bool                                        destroyFlag;
     };
 }  // namespace Breakout

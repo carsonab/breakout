@@ -25,7 +25,7 @@ namespace Breakout
         InputSystem();
         ~InputSystem() = default;
 
-        void Update(const std::vector<std::shared_ptr<Object>>& gameObjects);
+        void Update(const std::list<std::shared_ptr<Object>>& gameObjects);
 
         GameInputs GetCurrentInputs() const
         {

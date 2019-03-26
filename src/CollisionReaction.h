@@ -16,7 +16,6 @@ namespace Breakout
         {
         public:
             CollisionReaction();
-            void Init(void);
 
             typedef std::function<void(CollisionChannel, Object*, const Object*, Hit&)> CollisionReactionFunc;
             bool GetCollisionReaction(const std::string& reactionName, CollisionChannel channel, CollisionReactionFunc& outFunc);
