@@ -92,6 +92,7 @@ void Breakout::BreakoutGame::BeginGame()
     float       boardWidth  = brick_width * numBricks + brick_gap * (numBricks - 1);
     const float Offset      = 20;
     float       boardHeight = paddle_y + Offset;
+
     // set up the paddle
     _gameObjects.push_back(objectFactory->CreatePaddle(
         paddle_x, paddle_y, paddle_width, paddle_height, paddle_speed, 0.f, boardWidth, sf::Color::Magenta));
@@ -103,7 +104,7 @@ void Breakout::BreakoutGame::BeginGame()
     // left
     _gameObjects.push_back(objectFactory->CreateWall(0, 0, 2, boardHeight, sf::Color::White));
     // bottom
-    _gameObjects.push_back(objectFactory->CreateWall(0, boardHeight, boardWidth, 2, sf::Color::White));
+    _gameObjects.push_back(objectFactory->CreateFloor(0, boardHeight, boardWidth, 2, sf::Color::Black));
     // right
     _gameObjects.push_back(objectFactory->CreateWall(boardWidth, 0, 2, boardHeight, sf::Color::White));
 
@@ -120,6 +121,9 @@ void Breakout::BreakoutGame::BeginGame()
                 case 'R':
                     _gameObjects.push_back(objectFactory->CreateBrick(
                         position.x, position.y, (float)brick_width, (float)brick_height, sf::Color::Red));
+                    break;
+                case 'U':
+                    //_gameObjects.push_back(objectFactory->CreateBrick();
                     break;
                 case '-':
                     break;
@@ -140,14 +144,6 @@ void Breakout::BreakoutGame::BeginGame()
                                                      sf::Color::Cyan,
                                                      sf::Vector2f(ball_vel_x, ball_vel_y)));
 
-    // for (int i = 0; i < 10; ++i)
-    //{
-    //    for (int j = 0; j < 10; ++j)
-    //    {
-    //        // formatting
-    //        _gameObjects.push_back(objectFactory->TestCreateBrick(i * 51.f, j * 21.f, sf::Color::Red));
-    //    }
-    //}
 }
 
 void Breakout::BreakoutGame::Update(float deltaTime)

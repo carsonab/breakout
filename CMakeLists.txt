@@ -38,7 +38,10 @@ set(BREAKOUT_FILES
     src/InputSystem.h
     src/InputSystem.cpp
     src/CollisionReaction.h
-    src/CollisionReaction.cpp)
+    src/CollisionReaction.cpp
+    src/ScriptParser.h
+    src/ScriptParser.cpp
+    src/JSONLoader.h)
 
 if(NOT UNITY_BUILD)
     set(BUILD_FILES ${BREAKOUT_FILES})

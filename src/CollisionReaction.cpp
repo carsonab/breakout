@@ -3,7 +3,7 @@
 
 using namespace Breakout::Collision;
 
-void Bounce(CollisionChannel channel, Object* owner, const Object* collidedAgainst, const Hit& hit)
+void Bounce(CollisionChannel channel, Object* owner, Object* collidedAgainst, const Hit& hit)
 {
     if (owner == nullptr || collidedAgainst == nullptr)
     {
@@ -19,7 +19,7 @@ void Bounce(CollisionChannel channel, Object* owner, const Object* collidedAgain
     }
 }
 
-void Break(CollisionChannel channel, Object* owner, const Object* collidedAgainst, const Hit& hit)
+void Break(CollisionChannel channel, Object* owner, Object* collidedAgainst, const Hit& hit)
 {
     UNUSED_ARGS(hit);
 
@@ -31,6 +31,20 @@ void Break(CollisionChannel channel, Object* owner, const Object* collidedAgains
     channel;
 
     owner->SetDestroy();
+}
+
+void Kill(CollisionChannel channel, Object* owner, Object* collidedAgainst, const Hit& hit)
+{
+    UNUSED_ARGS(hit);
+
+    if (owner == nullptr || collidedAgainst == nullptr)
+    {
+        return;
+    }
+
+    channel;
+
+    collidedAgainst->SetDestroy();
 }
 
 bool CollisionReaction::GetCollisionReaction(const std::string& reactionName, CollisionChannel channel, CollisionReactionFunc& outFunc)
@@ -48,9 +62,12 @@ bool CollisionReaction::GetCollisionReaction(const std::string& reactionName, Co
     return ret;
 }
 
+
+
 CollisionReaction::CollisionReaction() :
      reactionMap(std::map<std::string, CollisionReactionFunc>())
 {
     reactionMap["Bounce"] = Bounce;
     reactionMap["Break"]  = Break;
+    reactionMap["Kill"]   = Kill;
 }

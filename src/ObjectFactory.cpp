@@ -100,6 +100,33 @@ std::shared_ptr<Object> Breakout::ObjectFactory::CreateWall(
     return object;
 }
 
+std::shared_ptr<Object> Breakout::ObjectFactory::CreateFloor(
+    float x, float y, float width, float height, sf::Color color)
+{
+    // Create the object
+    auto object = std::make_shared<Breakout::Object>();
+
+    // Wall shape
+    auto wallShape = std::make_shared<sf::RectangleShape>(sf::Vector2f(width, height));
+    wallShape->setFillColor(color);
+
+    // Render component
+    std::shared_ptr<Breakout::RenderComponent> render = std::make_shared<Breakout::RenderComponent>(object, wallShape);
+    object->AddComponent(render);
+
+    // Position component
+    std::shared_ptr<Breakout::PositionComponent> position = std::make_shared<Breakout::PositionComponent>(object);
+    position->SetPosition(sf::Vector2f(x, y));
+    object->AddComponent(position);
+
+    // Collision component
+    auto col = std::make_shared<Breakout::CollisionComponent>(object, wallShape);
+    object->AddComponent(col);
+    col->AddCollisionReaction("Kill");
+
+    return object;
+}
+
 std::shared_ptr<Object> Breakout::ObjectFactory::CreateBall(
     float x, float y, float radius, sf::Color color, const sf::Vector2f& vel)
 {

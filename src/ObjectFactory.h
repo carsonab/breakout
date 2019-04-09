@@ -27,6 +27,7 @@ namespace Breakout
                                              float     boundRight,
                                              sf::Color color);
         std::shared_ptr<Object> CreateWall(float x, float y, float width, float height, sf::Color color);
+        std::shared_ptr<Object> CreateFloor(float x, float y, float width, float height, sf::Color color);
         std::shared_ptr<Object> CreateBall(float x, float y, float radius, sf::Color color, const sf::Vector2f& vel);
     };
 }  // namespace Breakout
