@@ -1,37 +1,11 @@
 #include "Game.h"
 #include "Component.h"
+#include "JSONLoader.h"
+#include "ScriptParser.h"
 #include "SFML/Graphics.hpp"
 #include "nlohmann/json.hpp"
 
-namespace
-{
-    nlohmann::json LoadJsonFromFile(const std::string& filename)
-    {
-        nlohmann::json parsed_json = {};
 
-        FILE* file = fopen(filename.c_str(), "r");
-        Assert(file != nullptr, "Failed to open {}", filename);
-
-        if (file)
-        {
-            fseek(file, 0, SEEK_END);
-            auto file_size = ftell(file);
-            Assert(file_size > 0, "Empty file");
-
-            fseek(file, 0, SEEK_SET);
-
-            std::string buffer(file_size, 0);
-            fread((void*)buffer.data(), file_size, 1, file);
-
-            fclose(file);
-
-            parsed_json = nlohmann::json::parse(buffer.c_str());
-            Assert(!parsed_json.empty(), "Failed to parse JSON");
-        }
-
-        return parsed_json;
-    }
-}  // namespace
 
 bool Breakout::BreakoutGame::Init(std::shared_ptr<sf::RenderWindow>& sfWindow)
 {
@@ -64,13 +38,14 @@ void Breakout::BreakoutGame::BeginGame()
     Init(_sfWindow);
 
     const auto level_filename = "../../data/level_data.json";
-    auto       level          = LoadJsonFromFile(level_filename);
-
-    Assert(level.size() > 0, "Failed to load level data from %s.", level_filename);
+    auto       level          = JSONLoader::LoadJsonFromFile(level_filename);
+    
     if (level.size() == 0)
     {
         return;
     }
+
+    ScriptParser tim;
 
     std::vector<std::string> level_data    = level["level_data"];
     std::int32_t             brick_width   = level["brick_width"];
@@ -143,12 +118,10 @@ void Breakout::BreakoutGame::BeginGame()
                                                      ball_radius,
                                                      sf::Color::Cyan,
                                                      sf::Vector2f(ball_vel_x, ball_vel_y)));
-
 }
 
 void Breakout::BreakoutGame::Update(float deltaTime)
 {
-    
     for (auto iter = _gameObjects.begin(); iter != _gameObjects.end(); ++iter)
     {
         if ((*iter)->GetDestroy() == true)

@@ -27,6 +27,8 @@ namespace JSONLoader
             Assert(!parsed_json.empty(), "Failed to parse JSON");
         }
 
+        Assert(parsed_json.size() > 0, "Failed to load level data from %s.", filename);
+
         return parsed_json;
     }
 }
