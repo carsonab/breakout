@@ -12,11 +12,23 @@ ScriptParser::ScriptParser()
     //load object description 
     auto objDefinition = LoadJsonFromFile(definition_filename);
 
-     if (objDefinition.size() == 0)
+    if (objDefinition.size() == 0)
     {
         return;
     }
 
     // todo: read the read brick
-    auto redBrick = objDefinition["red_brick"];
+    auto types = objDefinition["ObjectTypes"];
+    for (auto objType : types)
+    {
+        std::string friendlyName = objType["FriendlyName"];
+        std::string symbolName   = objType["Symbol"];
+        auto components   = objType["Components"];
+
+        for (auto component : components)
+        {
+            // Do thing
+
+        }
+    }
 }
