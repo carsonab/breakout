@@ -27,8 +27,32 @@ ScriptParser::ScriptParser()
 
         for (auto component : components)
         {
-            // Do thing
+            std::string componentType = component["Type"];
+            if (componentType == "CollisionComponent")
+            {
+                int collisionWidth = component["width"];
+                int collisionHeight = component["height"];
 
+                // get our collision reactions
+                std::vector<std::string> allReactions;
+                auto componentReactions = component["reactions"];
+                for (auto collisionReaction : componentReactions)
+                {
+                    allReactions.push_back(collisionReaction);
+                }
+                collisionWidth = collisionWidth + collisionHeight;
+
+                // @! TODO START HERE
+                // We need to create an Object owner, then create a shape. Then we can add our collisionReactions
+                //CollisionComponent* collisionComponent = {};
+                //collisionComponent.AddCollisionReaction(const std::string& reactionId);
+
+                //{
+                 //   collisionWidth, collisionHeight,
+                //}
+            }
         }
+
+        
     }
 }
